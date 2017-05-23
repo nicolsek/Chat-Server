@@ -15,7 +15,10 @@ app.get("/", function(req, res){
 });
 
 io.on("connection", function(socket){
-    console.log("A client has connected!");
+    socket.on("Message", function(msg) {
+        //Send message to everyone!
+        io.emit("Message", msg);
+    });
 });
 
 //Setting up the http listener!

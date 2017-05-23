@@ -8,18 +8,23 @@
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
     </head>
 
     <body>
         <!-- Where all the messages go! -->
-        <ul class="list-group" id="messages"></ul>
+        <ul class="list-group" style="width: 100%; padding: 2%;" id="messages"></ul>
         
-        <div class="container" style="position: absolute; width: 100%; bottom: 0px; padding-bottom: 1%; text-align: right;">
+        <div class="container" style="background-color: #e9e9e9; opacity: .8; position: fixed; width: 100%; bottom: 0px; padding-bottom: 1%; padding-top: 1%; text-align: right;">
             <form class="form-inline"> 
-                <input type="text" class="form-control" placeholder="..." id="messageInput" style="width: 90%;"/>
-                <button class="btn btn-outline-success" style="width: 9%;">Send</button>
+                <input type="text" autocomplete="off" class="form-control" placeholder="..." id="messageInput" style="width: 90%;"/>
+                <button type="submit" class="btn btn-outline-success" id="messageSubmit" style="width: 9%;">Send</button>
             </form>
         </div>
+
+        <!-- Socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
+
 
         <!-- jQuery 3.2.1 min -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -27,8 +32,28 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     
-        <!-- Initialize Socket.io -->
-        <script src="/socket.io/socket.io.js"></script>
-        <script>var socket = io();</script>
+        <!-- Passing Chat Message to Server -->
+        <script>
+            $(function() {
+                //Init socket.io
+                var socket = io();
+
+                //On submit...
+                $("form").submit(function() {
+                    //Send message to node listener.
+                    socket.emit("Message", $("#messageInput").val());
+                    //Clear text input.
+                    $("#messageInput").val("");
+                    
+                    return false;
+                });
+
+                //On message get.
+                socket.on("Message", function(msg) {
+                    $("#messages").append($("<li class='list-group-item'>").text(msg))
+                });
+            });
+        </script>
+
     </body>
 </html>
