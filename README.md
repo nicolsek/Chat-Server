@@ -6,8 +6,9 @@ This is just a simple chat server. It is hosted on a specific port and has a sim
 
 # Usage
 To use...
-
-> git clone http://github.com/nicolsek/Chat-server
-> cd Chat-Server
-> npm install
-> npm start
+```
+git clone http://github.com/nicolsek/Chat-server
+cd Chat-Server
+npm install
+npm start
+```
