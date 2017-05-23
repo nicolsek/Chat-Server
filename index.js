@@ -1,9 +1,9 @@
-//Setting up the http listener.
-
 //Create the app ref.
 var app = require("express")();
 //Create http ref.
 var http = require("http").Server(app);
+//Creating socket.io ref
+var io = require("socket.io")(http);
 
 //Creating the port we're listening on.
 var port = 3000;
@@ -12,6 +12,10 @@ var port = 3000;
 app.get("/", function(req, res){
     //Send the client a webpage.
     res.sendFile(__dirname + "/index.html");
+});
+
+io.on("connection", function(socket){
+    console.log("A client has connected!");
 });
 
 //Setting up the http listener!

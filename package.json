@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple chat server made with Node.js and Socket.io",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "socket.io": "^2.0.1"
   }
 }
