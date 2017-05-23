@@ -8,10 +8,10 @@ var http = require("http").Server(app);
 //Creating the port we're listening on.
 var port = 3000;
 
-
 //Sending the client data once connected.
 app.get("/", function(req, res){
-    res.send("<h1>Hello World!</h1>");
+    //Send the client a webpage.
+    res.sendFile(__dirname + "/index.html");
 });
 
 //Setting up the http listener!
